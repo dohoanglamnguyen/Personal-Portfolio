@@ -1,0 +1,2110 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Space Grotesk', sans-serif;
+    background-color: #000;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: default;
+}
+
+.custom-cursor {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #f5f5f5;
+    position: fixed;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    transition: background-color 0.2s ease;
+    mix-blend-mode: difference;
+}
+
+.container {
+    background-color: #f5f5f5;
+    width: 1440px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 0;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y: auto; /* Allow vertical scrolling */
+}
+
+/* Quote Container - 1440px x 1024px */
+.quote-container {
+    width: 1440px;
+    max-width: 100%; /* Make responsive */
+    height: 1024px;
+    position: relative;
+    background-color: #f5f5f5;
+    overflow: hidden; /* Clip image-container if it extends beyond */
+    margin: 0 auto; /* Center the container */
+}
+
+/* Navigation Bar */
+.navigation {
+    display: flex;
+    align-items: center;
+    background-color: rgba(245, 245, 245, 0.8); /* 80% opacity - keep about page color */
+    backdrop-filter: blur(15px) saturate(180%); /* Blur effect for background */
+    -webkit-backdrop-filter: blur(15px) saturate(180%); /* Safari support */
+    padding: 0; /* Match homepage - no padding */
+    border-bottom: 3px solid #0B019E; /* Keep about page color */
+    height: 120px; /* Match homepage height */
+    position: fixed; /* Stay fixed in viewport when scrolling */
+    top: 0;
+    left: 0;
+    width: 100%; /* Full width */
+    z-index: 100;
+}
+
+.nav-item {
+    font-family: 'Cal Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: #0B019E;
+    font-size: 64px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background-color: transparent; /* Transparent to show navigation's 80% opacity background */
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    height: 100%;
+    text-decoration: none;
+}
+
+.nav-item.work,
+.nav-item.about {
+    flex: 0 0 20%; /* Match homepage flex values */
+}
+
+.nav-item.cow-icon {
+    flex: 0 0 60%; /* Match homepage flex values */
+}
+
+.nav-item:hover {
+    background-color: rgba(11, 1, 158, 0.05);
+}
+
+.nav-item.active {
+    color: #0B019E;
+}
+
+.nav-divider {
+    width: 3px; /* Match homepage divider width */
+    height: 80px; /* Match homepage divider height */
+    background-color: #0B019E; /* Keep about page color */
+    flex-shrink: 0;
+}
+
+.cow-icon {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.cow-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 80px;
+    background-color: transparent;
+    overflow: visible;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+/* Quote Hero Section - Refactored to two-row structure */
+.quote-hero {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    transform: translateY(0); /* Centered vertically */
+}
+
+/* Row 1: Meaning isn't */
+.quote-row-1 {
+    width: 100%;
+    margin-bottom: 0;
+    padding-left: 15%; /* Align with "It's" position */
+    padding-right: 0;
+}
+
+/* Row for found, below Meaning isn't */
+.quote-row-found {
+    width: 100%;
+    margin-bottom: 0;
+    padding-left: 15%; /* Align with "It's" position */
+    padding-right: 0;
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    top: 0; /* Align with quote-row-1 y position */
+}
+
+.quote-found {
+    white-space: nowrap;
+    margin-right: 150px; /* Maintain horizontal position */
+}
+
+/* Row 2: It's and image */
+.quote-row-2 {
+    display: flex;
+    align-items: flex-start; /* Align top of "It's" and image */
+    gap: 40px; /* Space between "It's" and image */
+    width: 100%;
+    padding-left: 15%; /* Align with row 1 */
+}
+
+.text-small {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 85px; /* Standard version font size */
+    line-height: 1.4;
+    letter-spacing: 0.5px;
+    font-weight: normal;
+}
+
+.text-small.black {
+    color: #000;
+}
+
+.text-small.blue {
+    color: #0B019E;
+}
+
+.text-large {
+    font-family: 'Cal Sans', sans-serif;
+    font-size: 400px; /* Standard version font size */
+    font-weight: bold;
+    line-height: 0.9;
+    letter-spacing: -4px;
+    margin-top: -20px;
+    margin-left: 0; /* Reset - now positioned by quote-row-2 padding */
+    flex-shrink: 0; /* Prevent "It's" from shrinking */
+}
+
+.text-large.blue {
+    color: #0B019E;
+}
+
+/* Image - now directly in quote-row-2, no container wrapper needed */
+
+.about-image {
+    width: 450px !important; /* Larger than "It's" (400px) */
+    height: auto !important; /* Maintain aspect ratio */
+    aspect-ratio: 650 / 456; /* Original aspect ratio (489:343 ≈ 650:456) */
+    object-fit: cover; /* Maintain aspect ratio and fill the dimensions */
+    margin-top: 0;
+    margin-left: 5%; /* Move to the right by 5% */
+    flex-shrink: 0; /* Prevent image from shrinking */
+    min-width: 450px !important; /* Larger than "It's" (400px) */
+}
+
+/* Make elements responsive based on viewport width */
+@media (min-width: 1441px) {
+    .text-small {
+        font-size: calc(85px * (100vw / 1440px));
+    }
+    
+    .text-large {
+        font-size: calc(400px * (100vw / 1440px));
+    }
+    
+    .about-image {
+        width: calc(450px * (100vw / 1440px)) !important; /* Larger than "It's" (400px) */
+        height: auto; /* Maintain aspect ratio */
+        aspect-ratio: 650 / 456; /* Original aspect ratio */
+        margin-top: 0;
+        margin-left: 5%; /* Move to the right by 5% */
+    }
+}
+
+/* About Me Section - Base Styles (1440x1024) */
+.about-me-section {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 80px 120px;
+    background-color: #f5f5f5;
+    gap: 96px;
+    min-height: 800px;
+}
+
+.photo-container {
+    flex: 0 0 50%;
+    position: relative;
+    max-width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.portrait-image {
+    max-width: 72%; /* Scaled down by 10% from 80% */
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+    position: relative;
+    z-index: 1;
+    transform: none;
+}
+
+.overlay-box {
+    position: absolute;
+    background-color: #f5f5f5;
+    z-index: 2;
+}
+
+.box-1 {
+    width: 25%;
+    aspect-ratio: 3 / 2;
+    top: 0%;
+    left: 0%; /* Move to left edge to cover unwanted space */
+    z-index: 3;
+}
+
+.box-2 {
+    width: 22.22%;
+    aspect-ratio: 16 / 11;
+    bottom: 0%;
+    right: 0%; /* Move to right edge to cover unwanted space */
+    z-index: 3;
+}
+
+.about-text-content {
+    flex: 0 0 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    max-width: 50%;
+    padding-top: 0;
+    padding-right: 10%; /* Add right padding so words won't be too close to the right side */
+}
+
+.about-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.about-heading {
+    font-family: 'Cal Sans', sans-serif;
+    font-size: 60px;
+    font-weight: bold;
+    color: #0B019E;
+    margin: 0;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.about-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px;
+    color: #000;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.about-text .highlight {
+    color: #0B019E;
+    font-weight: 600;
+}
+
+/* Skills & Experiences Section */
+.skills-section {
+    padding: calc(80px * (100vw / 1440px)) calc(120px * (100vw / 1440px)); /* Responsive padding based on 1440px */
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(10%); /* Move skills-section down by 10% */
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.skills-heading {
+    font-family: 'Cal Sans', sans-serif;
+    font-size: calc(60px * (100vw / 1440px)); /* Responsive font size based on 1440px */
+    font-weight: bold;
+    color: #0B019E;
+    margin-bottom: calc(30px * (100vw / 1440px)); /* Responsive margin based on 1440px */
+    position: relative;
+    top: calc(40px * (100vw / 1440px)); /* Responsive top position based on 1440px */
+    text-align: center;
+}
+
+.skills-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    width: calc(100% - 240px * (100vw / 1440px)); /* Responsive width based on 1440px */
+    max-width: none;
+    position: relative;
+    padding: calc(40px * (100vw / 1440px)); /* Responsive padding based on 1440px */
+    margin: 0 auto;
+    align-items: center;
+    justify-items: center;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.skill-tag {
+    background-color: #0B019E;
+    color: #f5f5f5;
+    padding: calc(20px * (100vw / 1440px)) calc(30px * (100vw / 1440px)); /* Responsive padding based on 1440px */
+    border-radius: 0;
+    border: 1px solid rgba(245, 245, 245, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: calc(12px * (100vw / 1440px)); /* Responsive gap based on 1440px */
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: calc(24px * (100vw / 1440px)); /* Responsive font size based on 1440px */
+    font-weight: 500;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, z-index 0.3s ease;
+    cursor: pointer;
+    transform: none;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    overflow: visible; /* Changed from hidden to visible so backgrounds show */
+    min-width: 0;
+}
+
+/* Row 1: All Blue - Logo on Left */
+.skill-tag:nth-child(1) {
+    background-color: #0B019E;
+    color: #f5f5f5;
+    border-color: rgba(245, 245, 245, 0.3);
+    justify-content: flex-start;
+    transform: rotate(-5deg); /* Rotate Figma */
+}
+
+.skill-tag:nth-child(2) {
+    background-color: #0B019E;
+    color: #f5f5f5;
+    border-color: rgba(245, 245, 245, 0.3);
+    justify-content: flex-start;
+}
+
+.skill-tag:nth-child(3) {
+    background-color: #0B019E;
+    color: #f5f5f5;
+    border-color: rgba(245, 245, 245, 0.3);
+    justify-content: flex-start;
+    transform: rotate(8deg); /* Rotate Illustrator */
+}
+
+/* Illustrator background - rotate with skill-tag */
+.skill-tag:nth-child(3)::before {
+    transform: rotate(8deg); /* Match skill-tag rotation */
+    transform-origin: top left; /* Rotate from top-left corner */
+}
+
+/* Row 2: All White - Logo on Right */
+.skill-tag:nth-child(4) {
+    background-color: #f5f5f5;
+    color: #000;
+    border-color: rgba(11, 1, 158, 0.3);
+    justify-content: space-between;
+    flex-direction: row-reverse;
+}
+
+.skill-tag:nth-child(5) {
+    background-color: #f5f5f5;
+    color: #000;
+    border-color: rgba(11, 1, 158, 0.3);
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    transform: rotate(-7deg); /* Rotate Adobe Premiere */
+    --icon-rotation: -7deg; /* Pass rotation to background */
+}
+
+.skill-tag:nth-child(6) {
+    background-color: #f5f5f5;
+    color: #000;
+    border-color: rgba(11, 1, 158, 0.3);
+    justify-content: space-between;
+    flex-direction: row; /* Normal direction: text left, icon right */
+}
+
+/* Row 3: All Blue - Logo on Left */
+.skill-tag:nth-child(7) {
+    background-color: #0B019E;
+    color: #f5f5f5;
+    border-color: rgba(245, 245, 245, 0.3);
+    justify-content: flex-start;
+    transform: rotate(6deg); /* Rotate Storyboarding */
+}
+
+/* Storyboarding background - rotate with skill-tag */
+.skill-tag:nth-child(7)::before {
+    left: 0 !important; /* Force to left edge */
+    top: 0 !important; /* Force to top edge */
+    right: auto !important;
+    transform: rotate(6deg); /* Match skill-tag rotation */
+    transform-origin: top left; /* Rotate from top-left corner */
+}
+
+.skill-tag:nth-child(8) {
+    background-color: #0B019E;
+    color: #f5f5f5;
+    border-color: rgba(245, 245, 245, 0.3);
+    justify-content: flex-start;
+}
+
+.skill-tag:nth-child(9) {
+    background-color: #0B019E;
+    color: #f5f5f5;
+    border-color: rgba(245, 245, 245, 0.3);
+    justify-content: flex-start;
+    transform: rotate(-4deg); /* Rotate Conceptualization */
+}
+
+/* Conceptualization background - rotate with skill-tag */
+.skill-tag:nth-child(9)::before {
+    left: 0 !important; /* Force to left edge */
+    top: 0 !important; /* Force to top edge */
+    right: auto !important;
+    transform: rotate(-4deg); /* Match skill-tag rotation */
+    transform-origin: top left; /* Rotate from top-left corner */
+}
+
+.skill-tag:hover {
+    z-index: 100;
+}
+
+/* Preserve rotation on hover for rotated items */
+.skill-tag:nth-child(1):hover {
+    transform: rotate(-5deg) scale(1.05);
+}
+
+.skill-tag:nth-child(3):hover {
+    transform: rotate(8deg) scale(1.05);
+}
+
+.skill-tag:nth-child(5):hover {
+    transform: rotate(-7deg) scale(1.05);
+}
+
+.skill-tag:nth-child(7):hover {
+    transform: rotate(6deg) scale(1.05);
+}
+
+.skill-tag:nth-child(9):hover {
+    transform: rotate(-4deg) scale(1.05);
+}
+
+.skill-icon {
+    height: calc(63px * (100vw / 1440px)) !important; /* Responsive icon size based on 1440px */
+    width: calc(63px * (100vw / 1440px)) !important; /* Responsive icon size based on 1440px */
+    aspect-ratio: 1;
+    object-fit: contain;
+    padding: 0;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    display: block;
+    position: relative;
+    z-index: 2; /* Icon on top of background */
+    background: transparent !important; /* Remove any background from icon */
+    border: none !important; /* Remove any border from icon */
+}
+
+/* Separate background box using parent container's ::before */
+.skill-tag {
+    position: relative;
+}
+
+/* Background for icons - positioned relative to skill-tag */
+.skill-tag::before {
+    content: '';
+    position: absolute;
+    width: calc(100px * (100vw / 1440px)); /* Responsive background size based on 1440px */
+    height: calc(100px * (100vw / 1440px)); /* Responsive background size based on 1440px */
+    background-color: #f5f5f5;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    box-sizing: border-box;
+    display: none; /* Hide by default, show only for specific items */
+}
+
+/* Show background for blue cards (rows 1 & 3) - move to top-left corner */
+.skill-tag:nth-child(1)::before,
+.skill-tag:nth-child(2)::before,
+.skill-tag:nth-child(3)::before,
+.skill-tag:nth-child(7)::before,
+.skill-tag:nth-child(8)::before,
+.skill-tag:nth-child(9)::before {
+    display: block;
+    background-color: #f5f5f5;
+    border-color: rgba(0, 0, 0, 0.1);
+    left: 0 !important; /* Force to left edge */
+    top: 0 !important; /* Force to top edge */
+    right: auto !important; /* Remove any right positioning */
+    transform: none; /* Remove any transform initially */
+}
+
+/* Position background for icons on the left (blue cards) - move to top-left corner */
+.skill-tag:nth-child(1)::before,
+.skill-tag:nth-child(2)::before,
+.skill-tag:nth-child(3)::before,
+.skill-tag:nth-child(7)::before,
+.skill-tag:nth-child(8)::before,
+.skill-tag:nth-child(9)::before {
+    left: 0 !important; /* Move to left edge */
+    top: 0 !important; /* Move to top edge */
+    right: auto !important;
+    transform: none !important; /* Remove centering transform */
+}
+
+/* Show background for white cards (row 2) - blue frames - move to top-right corner */
+.skill-tag:nth-child(4)::before,
+.skill-tag:nth-child(5)::before {
+    display: block;
+    background-color: #0B019E; /* Blue background for white cards */
+    border-color: rgba(11, 1, 158, 0.3);
+    right: 0; /* Move to right edge of skill-tag */
+    top: 0; /* Move to top edge of skill-tag */
+    transform: none; /* Remove centering transform */
+}
+
+/* Blender - rectangular background - match icon size, center behind icon on right */
+.skill-tag:nth-child(6) .skill-icon {
+    width: calc(80px * (100vw / 1440px)) !important; /* Larger logo - increased from 63px */
+    height: calc(80px * (100vw / 1440px)) !important; /* Larger logo - increased from 63px */
+    aspect-ratio: 1 !important; /* Force square aspect ratio */
+    object-fit: contain; /* Maintain logo proportions within square */
+}
+
+.skill-tag:nth-child(6)::before {
+    display: block;
+    background-color: #0B019E; /* Blue background for white cards */
+    border-color: rgba(11, 1, 158, 0.3);
+    width: calc(120px * (100vw / 1440px)); /* Longer background - increased from 100px */
+    height: calc(120px * (100vw / 1440px)); /* Taller background - increased from 100px */
+    right: 0; /* Move to right edge of skill-tag */
+    top: 0; /* Move to top edge of skill-tag */
+    transform: none; /* Remove centering transform */
+}
+
+/* Blue cards (rows 1 & 3) - white square frames */
+.skill-tag:nth-child(1) .skill-icon::before,
+.skill-tag:nth-child(2) .skill-icon::before,
+.skill-tag:nth-child(3) .skill-icon::before,
+.skill-tag:nth-child(7) .skill-icon::before,
+.skill-tag:nth-child(8) .skill-icon::before,
+.skill-tag:nth-child(9) .skill-icon::before {
+    background-color: #f5f5f5;
+    border-color: rgba(0, 0, 0, 0.1);
+    width: calc(100px * (100vw / 1440px)); /* Responsive width based on 1440px */
+    height: calc(100px * (100vw / 1440px)); /* Responsive height based on 1440px */
+}
+
+/* White cards (row 2) - blue square frames on right */
+.skill-tag:nth-child(4) .skill-icon::before,
+.skill-tag:nth-child(5) .skill-icon::before {
+    background-color: #0B019E; /* Blue background for white cards */
+    border-color: rgba(11, 1, 158, 0.3);
+    width: calc(100px * (100vw / 1440px)); /* Responsive width based on 1440px */
+    height: calc(100px * (100vw / 1440px)); /* Responsive height based on 1440px */
+}
+
+/* Blender logo - rectangular shape with blue frame */
+.skill-tag:nth-child(6) .skill-icon::before {
+    background-color: #0B019E; /* Blue background for white cards */
+    border-color: rgba(11, 1, 158, 0.3);
+    width: calc(100px * (100vw / 1440px)); /* Responsive width based on 1440px */
+    height: calc(100px * (100vw / 1440px)); /* Responsive height based on 1440px */
+}
+
+
+.skill-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+}
+
+/* Future Direction Section */
+.future-section {
+    padding: 80px 120px;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.future-heading {
+    font-family: 'Cal Sans', sans-serif;
+    font-size: 60px;
+    font-weight: bold;
+    color: #0B019E;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.future-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px;
+    color: #000; /* Changed to black */
+    line-height: 1.6;
+    width: 70%; /* Decreased to 70% so text can wrap and "3d mapping" goes to new line */
+    max-width: 1000px;
+    text-align: left; /* Left-align answer text */
+}
+
+/* Contact Section */
+.contact-section {
+    background-color: #0B019E;
+    padding: 60px 120px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    gap: 30px;
+    margin: 0 auto;
+}
+
+.contact-heading {
+    font-family: 'Cal Sans', sans-serif;
+    font-size: 60px;
+    font-weight: bold;
+    color: #f5f5f5;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.contact-info {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.contact-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.contact-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.contact-phone {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px;
+    color: #f5f5f5;
+    white-space: nowrap;
+}
+
+/* Responsive Design - Scaling from 1440x1024 base */
+
+/* Smaller desktops (1024px - 1280px width) */
+@media (max-width: 1280px) {
+    .container {
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .navigation {
+        height: 100px; /* Match homepage */
+    }
+    
+    .nav-item {
+        font-size: 48px;
+    }
+    
+    .nav-divider {
+        height: 60px; /* Match homepage */
+    }
+    
+    .cow-logo {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .main-content {
+        padding: calc(100px * (100vw / 1440px)) calc(80px * (100vw / 1440px)); /* Match desktop padding proportionally */
+        flex-direction: row; /* Match desktop layout - horizontal */
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .quote-row-1 {
+        padding-left: 15%; /* Match desktop padding */
+        padding-right: 0;
+        margin-bottom: 0;
+    }
+    
+    .quote-row-found {
+        padding-left: 15%; /* Match desktop padding */
+        padding-right: 0;
+        margin-bottom: calc(5px * (100vw / 1440px)); /* Further reduced to bring It's and image even closer */
+        display: flex;
+        justify-content: flex-end;
+    }
+    
+    .quote-found {
+        margin-right: calc(150px * (100vw / 1440px)); /* Match desktop margin proportionally */
+    }
+    
+    .quote-row-2 {
+        padding-left: 15%; /* Match desktop padding */
+        flex-direction: row; /* Match desktop - horizontal layout */
+        align-items: flex-start; /* Match desktop alignment */
+        gap: calc(40px * (100vw / 1440px)); /* Match desktop gap proportionally */
+    }
+    
+    .text-small {
+        font-size: 64px; /* Tablet standard: 64px for meaning isn't + found */
+    }
+    
+    .text-large {
+        font-size: 350px; /* Tablet standard: 350px for It's */
+    }
+    
+    .about-image {
+        width: calc(300px * (100vw / 1440px)) !important; /* Scaled down to 60% of original 500px */
+        height: auto; /* Maintain aspect ratio */
+        aspect-ratio: 650 / 456; /* Original aspect ratio */
+        max-width: 100%;
+    }
+    
+    .box-1 {
+        width: 25%;
+        aspect-ratio: 3 / 2;
+        top: 0%;
+        left: 0%; /* Move to left edge to cover unwanted space */
+    }
+    
+    .box-2 {
+        width: 22.22%;
+        aspect-ratio: 16 / 11;
+        bottom: 0%;
+        right: 0%; /* Move to right edge to cover unwanted space */
+    }
+    
+    .about-me-section {
+        padding: calc(80px * (100vw / 1440px)) calc(120px * (100vw / 1440px)); /* Match desktop padding proportionally */
+        gap: calc(100px * (100vw / 1440px)); /* Match desktop gap proportionally */
+        flex-direction: row; /* Match desktop - horizontal layout */
+    }
+    
+    .photo-container {
+        flex: 0 0 50%; /* Match desktop - 50% width */
+        max-width: 50%;
+        width: 50%;
+    }
+    
+    .about-text-content {
+        flex: 0 0 50%; /* Match desktop - 50% width */
+        max-width: 50%;
+        padding-right: calc(10% * (100vw / 1440px)); /* Match desktop padding */
+        gap: calc(60px * (100vw / 1440px)); /* Match desktop gap proportionally */
+    }
+    
+    .about-heading {
+        font-size: 40px; /* Tablet standard: 40px for questions 1-4 - already correct */
+        margin-bottom: calc(20px * (100vw / 1440px)); /* Match desktop margin */
+    }
+    
+    .about-text {
+        font-size: 20px; /* Tablet standard: 20px for answers */
+    }
+    
+    .portrait-image {
+        max-width: calc(72% * (100vw / 1440px)); /* Scaled down by 10% from 80% */
+    }
+    
+    .skills-section,
+    .future-section {
+        padding: 60px 50px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .skills-heading,
+    .future-heading {
+        font-size: 40px;
+        margin-bottom: 40px;
+    }
+    
+    .skills-container {
+        grid-template-columns: repeat(3, 1fr); /* Match desktop - 3 columns */
+        gap: 0;
+        padding: calc(40px * (100vw / 1440px)); /* Scale down proportionally */
+        margin: 0 auto;
+        width: calc(100% - 240px * (100vw / 1440px)); /* Scale down proportionally */
+        max-width: none;
+        box-sizing: border-box;
+        align-items: center;
+        justify-items: center;
+        overflow: hidden;
+    }
+    
+    .skill-tag {
+        padding: calc(20px * (100vw / 1440px)) calc(30px * (100vw / 1440px)); /* Scale down proportionally */
+        font-size: calc(24px * (100vw / 1440px)); /* Scale down proportionally */
+    }
+    
+    .skill-icon {
+        width: calc(63px * (100vw / 1440px)) !important; /* Responsive icon size based on 1440px */
+        height: calc(63px * (100vw / 1440px)) !important; /* Responsive icon size based on 1440px */
+    }
+    
+    .future-text {
+        font-size: 18px;
+        width: 70%; /* Responsive: maintain 70% width */
+        text-align: left; /* Left-align answer text */
+    }
+    
+    .contact-section {
+        padding: 50px 50px;
+    }
+    
+    .contact-heading {
+        font-size: 36px; /* Tablet standard: 36px for contact heading */
+    }
+    
+    .contact-icon {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .contact-phone {
+        font-size: 24px; /* Tablet standard: 24px for dial me */
+    }
+}
+
+/* Medium desktops (1281px - 1600px width) */
+@media (min-width: 1281px) and (max-width: 1600px) {
+    .container {
+        width: 100%;
+        max-width: 1600px;
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .quote-container {
+        width: 100%;
+        max-width: 1600px;
+        height: calc(1024px * (100vw / 1440px)); /* Responsive height */
+        min-height: 1024px;
+    }
+    
+    .navigation {
+        height: 100px; /* Match homepage */
+    }
+    
+    .nav-item {
+        font-size: 56px;
+    }
+    
+    .nav-divider {
+        height: 60px; /* Match homepage */
+    }
+    
+    .cow-logo {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .main-content {
+        padding: 80px 60px;
+    }
+    
+    .quote-row-1 {
+        padding-left: 12%;
+    }
+    
+    .quote-row-2 {
+        padding-left: 12%;
+        gap: 30px;
+    }
+    
+    .text-small {
+        font-size: calc(85px * (100vw / 1440px)); /* Responsive: 85px at 1440px */
+    }
+    
+    .text-large {
+        font-size: calc(400px * (100vw / 1440px)); /* Responsive: 400px at 1440px */
+    }
+    
+    .about-image {
+        width: calc(300px * (100vw / 1440px)) !important; /* Scaled down to 60% of original 500px */
+        height: auto; /* Maintain aspect ratio */
+        aspect-ratio: 650 / 456; /* Original aspect ratio */
+        max-width: none !important; /* Remove max-width restriction to allow scaling */
+        max-height: none !important; /* Remove max-height restriction */
+    }
+    
+    .box-1 {
+        width: 25%;
+        aspect-ratio: 3 / 2;
+        top: 0%;
+        left: 12.5%;
+    }
+    
+    .box-2 {
+        width: 22.22%;
+        aspect-ratio: 16 / 11;
+        bottom: 0%;
+        right: 12.5%;
+    }
+    
+    .about-me-section {
+        padding: 70px 80px;
+        gap: 70px;
+    }
+    
+    .about-heading {
+        font-size: 50px;
+    }
+    
+    .about-text {
+        font-size: 20px;
+    }
+    
+    .portrait-image {
+        max-width: 67.5%; /* Scaled down by 10% from 75% */
+    }
+    
+    .skills-section,
+    .future-section {
+        padding: 70px 80px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .skills-heading,
+    .future-heading {
+        font-size: 50px;
+        margin-bottom: 50px;
+    }
+    
+    .skills-container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        padding: 40px;
+        margin: 0 auto;
+        width: calc(100% - 160px);
+        max-width: none;
+        box-sizing: border-box;
+        align-items: center;
+        justify-items: center;
+        overflow: hidden;
+    }
+    
+    .skill-tag {
+        padding: 18px 25px;
+        font-size: 20px;
+    }
+    
+    .future-text {
+        font-size: 20px;
+        width: 70%; /* Responsive: maintain 70% width */
+        text-align: left; /* Left-align answer text */
+    }
+    
+    .contact-section {
+        padding: 55px 80px;
+    }
+    
+    .contact-heading {
+        font-size: 50px;
+    }
+    
+    .contact-icon {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .contact-phone {
+        font-size: 20px;
+    }
+}
+
+/* Standard desktop (1440x1024) - base styles already set above */
+
+/* Large desktops (1601px - 1920px width) */
+@media (min-width: 1601px) and (max-width: 1920px) {
+    .container {
+        width: 100%;
+        max-width: 1920px;
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .quote-container {
+        width: 100%;
+        max-width: 1920px;
+        height: calc(1024px * (100vw / 1440px)); /* Responsive height - scales with viewport */
+        min-height: 1024px;
+    }
+    
+    .navigation {
+        height: 110px; /* Match homepage */
+    }
+    
+    .nav-item {
+        font-size: 72px;
+    }
+    
+    .nav-divider {
+        height: 70px; /* Match homepage */
+    }
+    
+    .cow-logo {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .main-content {
+        padding: 110px 90px;
+    }
+    
+    .quote-row-1 {
+        padding-left: 10%;
+    }
+    
+    .quote-row-2 {
+        padding-left: 10%;
+        gap: 35px;
+    }
+    
+    .text-small {
+        font-size: calc(85px * (100vw / 1440px)); /* Responsive: 85px at 1440px */
+    }
+    
+    .text-large {
+        font-size: calc(400px * (100vw / 1440px)); /* Responsive: 400px at 1440px */
+    }
+    
+    .about-image {
+        width: calc(500px * (100vw / 1440px)) !important; /* Reduced to 500px - larger than "It's" (400px) */
+        height: auto !important; /* Maintain aspect ratio */
+        aspect-ratio: 650 / 456; /* Original aspect ratio */
+        max-width: none !important; /* Remove max-width restriction to allow scaling */
+        max-height: none !important; /* Remove max-height restriction */
+    }
+    
+    .box-1 {
+        width: 25%;
+        aspect-ratio: 3 / 2;
+        top: 0%;
+        left: 7.5%;
+    }
+    
+    .box-2 {
+        width: 22.22%;
+        aspect-ratio: 16 / 11;
+        bottom: 0%;
+        right: 7.5%;
+    }
+    
+    .about-me-section {
+        padding: 100px 140px;
+        gap: 115px;
+    }
+    
+    .about-heading {
+        font-size: 72px;
+    }
+    
+    .about-text {
+        font-size: 32px;
+    }
+    
+    .portrait-image {
+        max-width: 76.5%; /* Scaled down by 10% from 85% */
+    }
+    
+    .skills-section,
+    .future-section {
+        padding: 100px 140px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .skills-heading,
+    .future-heading {
+        font-size: 72px;
+        margin-bottom: 70px;
+    }
+    
+    .skills-container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        padding: 60px;
+        margin: 0 auto;
+        width: calc(100% - 280px);
+        max-width: none;
+        box-sizing: border-box;
+        align-items: center;
+        justify-items: center;
+        overflow: hidden;
+    }
+    
+    .skill-tag {
+        padding: 25px 35px;
+        font-size: 32px;
+    }
+    
+    .skill-icon {
+        width: calc(63px * (100vw / 1440px)) !important; /* Responsive icon size based on 1440px */
+        height: calc(63px * (100vw / 1440px)) !important; /* Responsive icon size based on 1440px */
+    }
+    
+    .future-text {
+        font-size: 32px;
+        width: 70%; /* Responsive: maintain 70% width */
+        text-align: left; /* Left-align answer text */
+    }
+    
+    .contact-section {
+        padding: 80px 140px;
+    }
+    
+    .contact-heading {
+        font-size: 72px;
+    }
+    
+    .contact-icon {
+        width: 48px;
+        height: 48px;
+    }
+    
+    .contact-phone {
+        font-size: 32px;
+    }
+}
+
+/* Extra large desktops (1921px+) */
+@media (min-width: 1921px) {
+    .container {
+        width: 100%;
+        max-width: 2560px;
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .quote-container {
+        width: 100%;
+        max-width: 100%;
+        height: calc(1024px * (100vw / 1440px)); /* Responsive height - scales with viewport */
+        min-height: 1024px;
+    }
+    
+    .navigation {
+        height: 150px; /* Match homepage */
+    }
+    
+    .nav-item {
+        font-size: 80px;
+    }
+    
+    .nav-divider {
+        height: 100px; /* Match homepage */
+    }
+    
+    .cow-logo {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .main-content {
+        padding: 120px 100px;
+    }
+    
+    .quote-row-1 {
+        padding-left: 8%;
+    }
+    
+    .quote-row-2 {
+        padding-left: 8%;
+        gap: 40px;
+    }
+    
+    .text-small {
+        font-size: calc(85px * (100vw / 1440px)); /* Responsive: 85px at 1440px */
+    }
+    
+    .text-large {
+        font-size: calc(400px * (100vw / 1440px)); /* Responsive: 400px at 1440px */
+    }
+    
+    .about-image {
+        width: calc(500px * (100vw / 1440px)) !important; /* Reduced to 500px - larger than "It's" (400px) */
+        height: auto !important; /* Maintain aspect ratio */
+        aspect-ratio: 650 / 456; /* Original aspect ratio */
+        max-width: none !important; /* Remove max-width restriction to allow scaling */
+        max-height: none !important; /* Remove max-height restriction */
+    }
+    
+    .box-1 {
+        width: 25%;
+        aspect-ratio: 3 / 2;
+        top: 0%;
+        left: 5%;
+    }
+    
+    .box-2 {
+        width: 22.22%;
+        aspect-ratio: 16 / 11;
+        bottom: 0%;
+        right: 5%;
+    }
+    
+    .about-me-section {
+        padding: 120px 160px;
+        gap: 130px;
+    }
+    
+    .about-heading {
+        font-size: 80px;
+    }
+    
+    .about-text {
+        font-size: 36px;
+    }
+    
+    .portrait-image {
+        max-width: 81%; /* Scaled down by 10% from 90% */
+    }
+    
+    .skills-section,
+    .future-section {
+        padding: 120px 160px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .skills-heading,
+    .future-heading {
+        font-size: 80px;
+        margin-bottom: 80px;
+    }
+    
+    .skills-container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        padding: 80px;
+        margin: 0 auto;
+        width: calc(100% - 320px);
+        max-width: none;
+        box-sizing: border-box;
+        align-items: center;
+        justify-items: center;
+        overflow: hidden;
+    }
+    
+    .skill-tag {
+        padding: 30px 40px;
+        font-size: 36px;
+    }
+    
+    .skill-icon {
+        width: calc(63px * (100vw / 1440px)) !important; /* Responsive icon size based on 1440px */
+        height: calc(63px * (100vw / 1440px)) !important; /* Responsive icon size based on 1440px */
+    }
+    
+    .future-text {
+        font-size: 36px;
+        width: 70%; /* Responsive: maintain 70% width */
+        text-align: left; /* Left-align answer text */
+    }
+    
+    .contact-section {
+        padding: 100px 160px;
+    }
+    
+    .contact-heading {
+        font-size: 80px;
+    }
+    
+    .contact-icon {
+        width: 56px;
+        height: 56px;
+    }
+    
+    .contact-phone {
+        font-size: 36px;
+    }
+}
+
+/* Maintain aspect ratio for very small desktops */
+@media (max-width: 1023px) {
+    .container {
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .navigation {
+        height: 60px; /* Match homepage mobile navigation height */
+        border-bottom: 2px solid #0B019E; /* Match homepage mobile border */
+        padding: 0; /* Match homepage - no padding */
+        gap: 0; /* Remove gap for mobile */
+    }
+    
+    .nav-item {
+        font-size: 24px; /* Match homepage mobile font size */
+        letter-spacing: 1px; /* Match homepage mobile letter spacing */
+    }
+    
+    .nav-item.work,
+    .nav-item.about {
+        flex: 0 0 25%; /* Match homepage mobile flex values */
+    }
+    
+    .nav-item.cow-icon {
+        flex: 0 0 50%; /* Match homepage mobile flex values */
+    }
+    
+    .nav-divider {
+        width: 2px; /* Match homepage mobile divider width */
+        height: 40px; /* Match homepage mobile divider height */
+        margin: 0; /* Remove margin for mobile */
+    }
+    
+    .cow-logo {
+        width: 40px; /* Match homepage mobile logo size */
+        height: 40px; /* Match homepage mobile logo size */
+    }
+    
+    .cow-icon {
+        padding: 10px; /* Match homepage mobile padding */
+    }
+    
+    .main-content {
+        padding: 50px 30px;
+        flex-direction: column;
+        gap: 30px;
+        margin-top: 20%; /* Move main-content down by 20% */
+    }
+    
+    .quote-row-1 {
+        padding-left: 0;
+        padding-right: 0;
+        margin-bottom: 0;
+        transform: translateY(-120%); /* Move "meaning isn't" up by 120% for mobile */
+    }
+    
+    .quote-row-found {
+        padding-left: 0;
+        padding-right: 0;
+        margin-bottom: 2px; /* Further reduced to bring It's and image even closer */
+        display: flex;
+        justify-content: flex-end;
+    }
+    
+    .quote-found {
+        margin-right: 0;
+    }
+    
+    .quote-row-2 {
+        padding-left: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        margin-top: 20%; /* Move It's and image down by 20% without affecting quote-row-1 */
+    }
+    
+    .text-small {
+        font-size: 64px; /* Mobile standard: 64px for meaning isn't and found */
+        line-height: 1.2;
+    }
+    
+    .text-large {
+        font-size: 200px; /* Mobile standard: 200px for It's */
+        line-height: 0.9;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    
+    .about-image {
+        width: 304px !important; /* 70% larger than 179px (179 * 1.7 = 304.3px) */
+        min-width: 304px !important; /* Override desktop min-width */
+        height: auto !important; /* Maintain aspect ratio */
+        aspect-ratio: 4 / 3; /* Landscape aspect ratio for mobile */
+        max-width: 100%;
+        object-fit: cover; /* Maintain aspect ratio */
+        margin-top: 0;
+        align-self: flex-start;
+    }
+    
+    .box-1 {
+        width: 25%;
+        aspect-ratio: 3 / 2;
+        top: 0%;
+        left: 0%; /* Move to left edge to cover unwanted space */
+    }
+    
+    .box-2 {
+        width: 22.22%;
+        aspect-ratio: 16 / 11;
+        bottom: 0%;
+        right: 0%; /* Move to right edge to cover unwanted space */
+    }
+    
+    .about-me-section {
+        padding: clamp(30px, 4vw, 40px) clamp(15px, 5vw, 20px); /* Responsive padding that scales with viewport */
+        gap: clamp(30px, 4vw, 40px);
+        flex-direction: column; /* Vertical layout: image first, then text */
+        align-items: flex-start; /* Left-align everything */
+    }
+    
+    .photo-container {
+        flex: 0 0 auto;
+        max-width: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center; /* Center the image horizontally */
+        align-items: center;
+    }
+    
+    .portrait-image {
+        max-width: 90%; /* Scaled down by 10% from 100% */
+        width: 90%; /* Scaled down by 10% from 100% */
+    }
+    
+    .about-text-content {
+        flex: 0 0 auto;
+        max-width: 100%;
+        width: 100%;
+        padding-right: 0; /* Remove right padding for mobile */
+        gap: clamp(25px, 3vw, 30px); /* Responsive gap */
+    }
+    
+    .about-heading {
+        font-size: clamp(22px, 5vw, 24px); /* Responsive font size, min 22px, max 24px */
+        margin-bottom: clamp(10px, 2vw, 12px);
+    }
+    
+    .about-text {
+        font-size: clamp(14px, 3.5vw, 16px); /* Responsive font size, min 14px, max 16px */
+        line-height: 1.5; /* Better readability on small screens */
+    }
+    
+    .skills-section {
+        padding: clamp(30px, 4vw, 40px) clamp(15px, 5vw, 20px); /* Match about-me-section padding for alignment */
+        width: 100%;
+        box-sizing: border-box;
+        align-items: center !important; /* Center-align content */
+        transform: none; /* Remove transform for proper alignment when scrolling */
+    }
+    
+    .future-section {
+        padding: clamp(30px, 4vw, 40px) clamp(15px, 5vw, 20px); /* Match about-me-section padding for alignment */
+        width: 100%;
+        box-sizing: border-box;
+        align-items: center !important; /* Center-align content */
+    }
+    
+    .skills-heading {
+        font-size: clamp(22px, 5vw, 24px) !important; /* Responsive font size, min 22px, max 24px */
+        margin-bottom: clamp(10px, 2vw, 12px) !important;
+        text-align: center !important; /* Center-align heading */
+        position: relative !important;
+        top: 0 !important; /* Remove top positioning */
+    }
+    
+    .future-heading {
+        font-size: clamp(22px, 5vw, 24px) !important; /* Responsive font size, min 22px, max 24px */
+        margin-bottom: clamp(10px, 2vw, 12px) !important;
+        text-align: center !important; /* Center-align heading */
+    }
+    
+    .skills-container {
+        grid-template-columns: repeat(3, 1fr) !important; /* Match desktop/tablet - 3 columns */
+        gap: clamp(8px, 1.5vw, 12px) !important; /* Small gap for better visual separation */
+        padding: clamp(25px, 4vw, 45px) clamp(8px, 2vw, 15px) !important; /* Reduced horizontal padding to extend tags */
+        margin: 0 auto !important; /* Center the container */
+        width: calc(100% - clamp(16px, 4vw, 30px)) !important; /* Reduced width constraint to allow longer tags */
+        max-width: none;
+        box-sizing: border-box;
+        align-items: center !important; /* Center items */
+        justify-items: center !important; /* Center grid items */
+        overflow: hidden !important; /* Match desktop */
+    }
+    
+    .skill-tag {
+        padding: clamp(8px, 1.5vw, 12px) 0 !important; /* Vertical padding only, horizontal handled by text/icon */
+        font-size: 10px !important; /* Standard mobile: 10px for tag text */
+        line-height: 1.3 !important; /* Slightly increased line height for better readability when wrapping */
+        width: 100% !important; /* Full width in grid cell */
+        max-width: 100%;
+        margin: 0;
+        min-height: clamp(40px, 6.5vw, 60px) !important; /* Minimum height to match background */
+        height: auto !important; /* Auto height to accommodate wrapped text */
+        gap: 0 !important; /* Remove gap, using absolute positioning */
+        position: relative !important; /* For absolute positioning of icons */
+        overflow: visible !important; /* Allow text to wrap and be visible */
+        box-sizing: border-box !important;
+        /* Restore rotations for mobile to match desktop/tablet */
+    }
+    
+    /* Scale backgrounds to match icon size on mobile - Blue cards (left side) */
+    .skill-tag:nth-child(1)::before,
+    .skill-tag:nth-child(2)::before,
+    .skill-tag:nth-child(3)::before,
+    .skill-tag:nth-child(7)::before,
+    .skill-tag:nth-child(8)::before,
+    .skill-tag:nth-child(9)::before {
+        width: clamp(40px, 6.5vw, 60px) !important; /* Background size */
+        height: clamp(40px, 6.5vw, 60px) !important;
+        left: 0 !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important; /* Center vertically */
+    }
+    
+    /* Scale icons to match background - Blue cards (left side) */
+    .skill-tag:nth-child(1) .skill-icon,
+    .skill-tag:nth-child(2) .skill-icon,
+    .skill-tag:nth-child(3) .skill-icon,
+    .skill-tag:nth-child(7) .skill-icon,
+    .skill-tag:nth-child(8) .skill-icon,
+    .skill-tag:nth-child(9) .skill-icon {
+        width: clamp(28px, 4.5vw, 42px) !important; /* Icon size - slightly smaller than background */
+        height: clamp(28px, 4.5vw, 42px) !important;
+        position: absolute !important;
+        left: clamp(6px, 1vw, 9px) !important; /* Center icon in background */
+        top: 50% !important;
+        transform: translateY(-50%) !important; /* Center vertically */
+        z-index: 2 !important; /* Icon on top of background */
+    }
+    
+    /* Scale backgrounds to match icon size on mobile - White cards (right side) */
+    .skill-tag:nth-child(4)::before,
+    .skill-tag:nth-child(5)::before {
+        width: clamp(40px, 6.5vw, 60px) !important; /* Background size */
+        height: clamp(40px, 6.5vw, 60px) !important;
+        right: 0 !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important; /* Center vertically */
+    }
+    
+    /* Scale icons to match background - White cards (right side) */
+    .skill-tag:nth-child(4) .skill-icon,
+    .skill-tag:nth-child(5) .skill-icon {
+        width: clamp(28px, 4.5vw, 42px) !important; /* Icon size - slightly smaller than background */
+        height: clamp(28px, 4.5vw, 42px) !important;
+        position: absolute !important;
+        right: clamp(6px, 1vw, 9px) !important; /* Center icon in background */
+        top: 50% !important;
+        transform: translateY(-50%) !important; /* Center vertically */
+        z-index: 2 !important; /* Icon on top of background */
+    }
+    
+    /* Blender background - slightly larger */
+    .skill-tag:nth-child(6)::before {
+        width: clamp(48px, 8vw, 72px) !important; /* Larger background for Blender */
+        height: clamp(48px, 8vw, 72px) !important;
+        right: 0 !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important; /* Center vertically */
+    }
+    
+    /* Blender icon - scale to match background */
+    .skill-tag:nth-child(6) .skill-icon {
+        width: clamp(36px, 6vw, 54px) !important; /* Icon size - slightly smaller than background */
+        height: clamp(36px, 6vw, 54px) !important;
+        position: absolute !important;
+        right: clamp(6px, 1vw, 9px) !important; /* Center icon in background */
+        top: 50% !important;
+        transform: translateY(-50%) !important; /* Center vertically */
+        z-index: 2 !important; /* Icon on top of background */
+    }
+    
+    /* Position text within tags - Blue cards (text after icon) */
+    .skill-tag:nth-child(1) .skill-text,
+    .skill-tag:nth-child(2) .skill-text,
+    .skill-tag:nth-child(3) .skill-text,
+    .skill-tag:nth-child(7) .skill-text,
+    .skill-tag:nth-child(8) .skill-text,
+    .skill-tag:nth-child(9) .skill-text {
+        margin-left: clamp(40px, 6.5vw, 60px) !important; /* Space for background */
+        padding: clamp(8px, 1.5vw, 12px) clamp(12px, 2vw, 20px) clamp(8px, 1.5vw, 12px) clamp(8px, 1.5vw, 12px) !important; /* Padding inside tag */
+        display: block !important;
+        white-space: normal !important; /* Allow text to wrap */
+        overflow: visible !important; /* Show full text */
+        word-wrap: break-word !important; /* Break long words if needed */
+        max-width: calc(100% - clamp(40px, 6.5vw, 60px)) !important; /* Prevent overflow */
+    }
+    
+    /* Position text within tags - White cards (text before icon) */
+    .skill-tag:nth-child(4) .skill-text,
+    .skill-tag:nth-child(5) .skill-text {
+        margin-right: clamp(40px, 6.5vw, 60px) !important; /* Space for background */
+        padding: clamp(8px, 1.5vw, 12px) clamp(8px, 1.5vw, 12px) clamp(8px, 1.5vw, 12px) clamp(12px, 2vw, 20px) !important; /* Padding inside tag */
+        display: block !important;
+        white-space: normal !important; /* Allow text to wrap */
+        overflow: visible !important; /* Show full text */
+        word-wrap: break-word !important; /* Break long words if needed */
+        max-width: calc(100% - clamp(40px, 6.5vw, 60px)) !important; /* Prevent overflow */
+    }
+    
+    /* Blender text */
+    .skill-tag:nth-child(6) .skill-text {
+        margin-right: clamp(48px, 8vw, 72px) !important; /* Space for larger Blender background */
+        padding: clamp(8px, 1.5vw, 12px) clamp(8px, 1.5vw, 12px) clamp(8px, 1.5vw, 12px) clamp(12px, 2vw, 20px) !important; /* Padding inside tag */
+        display: block !important;
+        white-space: normal !important; /* Allow text to wrap */
+        overflow: visible !important; /* Show full text */
+        word-wrap: break-word !important; /* Break long words if needed */
+        max-width: calc(100% - clamp(48px, 8vw, 72px)) !important; /* Prevent overflow */
+    }
+    
+    /* Restore rotations for skill tags on mobile */
+    .skill-tag:nth-child(1) {
+        transform: rotate(-5deg) !important; /* Rotate Figma */
+    }
+    
+    .skill-tag:nth-child(3) {
+        transform: rotate(8deg) !important; /* Rotate Illustrator */
+    }
+    
+    .skill-tag:nth-child(5) {
+        transform: rotate(-7deg) !important; /* Rotate Adobe Premiere */
+    }
+    
+    .skill-tag:nth-child(7) {
+        transform: rotate(6deg) !important; /* Rotate Storyboarding */
+    }
+    
+    .skill-tag:nth-child(9) {
+        transform: rotate(-4deg) !important; /* Rotate Conceptualization */
+    }
+    
+    .future-text {
+        font-size: clamp(14px, 3.5vw, 16px); /* Responsive font size, min 14px, max 16px */
+        width: 100%; /* Full width */
+        line-height: 1.5; /* Better readability on small screens */
+        text-align: left !important; /* Left-align answer text */
+    }
+    
+    .contact-section {
+        padding: clamp(40px, 6vw, 60px) clamp(20px, 5vw, 40px) !important; /* Responsive padding */
+    }
+    
+    .contact-content {
+        flex-direction: column !important; /* Vertical layout like reference */
+        gap: clamp(20px, 4vw, 30px) !important; /* Responsive gap */
+        align-items: center !important; /* Center everything like reference */
+        justify-content: center !important;
+    }
+    
+    .contact-heading {
+        font-size: clamp(22px, 5vw, 24px) !important; /* Match other headings */
+        text-align: center !important; /* Center heading */
+        text-decoration: underline !important; /* Underline like reference */
+        margin-bottom: 0 !important;
+    }
+    
+    .contact-info {
+        display: flex !important;
+        flex-direction: row !important; /* Horizontal layout */
+        flex-wrap: wrap !important; /* Allow wrapping */
+        align-items: center !important; /* Center everything */
+        justify-content: center !important;
+        gap: clamp(15px, 3vw, 20px) !important; /* Gap between items */
+    }
+    
+    /* Icons should be in a horizontal row */
+    .contact-link {
+        display: inline-flex !important;
+        flex-shrink: 0 !important;
+    }
+    
+    .contact-icon {
+        width: clamp(32px, 6vw, 40px) !important; /* Responsive icon size */
+        height: clamp(32px, 6vw, 40px) !important;
+    }
+    
+    .contact-phone {
+        font-size: clamp(14px, 3.5vw, 16px) !important; /* Match answer text size */
+        text-align: center !important; /* Center phone number */
+        text-decoration: underline !important; /* Underline phone number like reference */
+        flex-basis: 100% !important; /* Force to new line */
+        width: 100% !important;
+        margin-top: clamp(5px, 1vw, 10px) !important; /* Space above phone */
+    }
+}
+
+/* Mobile version (max-width: 412px) - Match homepage mobile exactly */
+@media (max-width: 412px) {
+    .navigation {
+        height: 60px !important; /* Match homepage mobile navigation height */
+        border-bottom: 2px solid #0B019E !important; /* Match homepage mobile border */
+        padding: 0 !important; /* Match homepage - no padding */
+        justify-content: space-between !important; /* Match homepage layout */
+        gap: 0 !important; /* Remove gap for mobile */
+        background-color: rgba(245, 245, 245, 0.8) !important; /* Keep background */
+        backdrop-filter: blur(15px) saturate(180%) !important; /* Keep blur */
+        -webkit-backdrop-filter: blur(15px) saturate(180%) !important; /* Safari support */
+    }
+    
+    .nav-item {
+        font-size: 24px !important; /* Match homepage mobile font size */
+        letter-spacing: 1px !important; /* Match homepage mobile letter spacing */
+    }
+    
+    .nav-item.work {
+        flex: 0 0 25% !important; /* Match homepage mobile flex values */
+        max-width: 25% !important;
+    }
+    
+    .nav-item.about {
+        flex: 0 0 25% !important; /* Match homepage mobile flex values */
+        max-width: 25% !important;
+    }
+    
+    .nav-item.cow-icon {
+        flex: 0 0 50% !important; /* Match homepage mobile flex values */
+        max-width: 50% !important;
+    }
+    
+    .nav-divider {
+        width: 2px !important; /* Match homepage mobile divider width */
+        height: 40px !important; /* Match homepage mobile divider height */
+        margin: 0 !important; /* Remove margin for mobile */
+        background-color: #0B019E !important; /* Ensure divider color */
+        flex-shrink: 0 !important;
+    }
+    
+    .cow-logo {
+        width: 40px !important; /* Match homepage mobile logo size */
+        height: 40px !important; /* Match homepage mobile logo size */
+    }
+    
+    .cow-icon {
+        padding: 10px !important; /* Match homepage mobile padding */
+    }
+    
+    /* About Me Section - Small Mobile */
+    .about-me-section {
+        padding: 30px 15px !important; /* Slightly reduced padding for small screens */
+        gap: 30px !important;
+        flex-direction: column !important; /* Vertical layout: image first, then text */
+        align-items: flex-start !important; /* Left-align everything */
+    }
+    
+    .photo-container {
+        flex: 0 0 auto !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important; /* Center the image horizontally */
+        align-items: center !important;
+    }
+    
+    .portrait-image {
+        max-width: 90% !important; /* Scaled down by 10% from 100% */
+        width: 90% !important; /* Scaled down by 10% from 100% */
+    }
+    
+    .about-text-content {
+        flex: 0 0 auto !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        padding-right: 0 !important; /* Remove right padding for mobile */
+        gap: 25px !important; /* Slightly reduced gap for small screens */
+    }
+    
+    .about-heading {
+        font-size: 24px !important; /* Mobile: 24px for questions */
+        margin-bottom: 10px !important;
+    }
+    
+    .about-text {
+        font-size: 16px !important; /* Mobile: 16px for answers */
+    }
+    
+    /* Skills & Future Sections - Small Mobile */
+    .skills-section {
+        padding: 30px 15px !important; /* Match about-me-section padding for alignment */
+        width: 100% !important;
+        box-sizing: border-box !important;
+        align-items: center !important; /* Center-align content */
+        transform: none !important; /* Remove transform for proper alignment when scrolling */
+    }
+    
+    .future-section {
+        padding: 30px 15px !important; /* Match about-me-section padding for alignment */
+        width: 100% !important;
+        box-sizing: border-box !important;
+        align-items: center !important; /* Center-align content */
+    }
+    
+    .skills-heading {
+        font-size: 24px !important; /* Mobile: 24px for questions */
+        margin-bottom: 10px !important;
+        text-align: center !important; /* Center-align heading */
+        position: relative !important;
+        top: 0 !important; /* Remove top positioning */
+    }
+    
+    .future-heading {
+        font-size: 24px !important; /* Mobile: 24px for questions */
+        margin-bottom: 10px !important;
+        text-align: center !important; /* Center-align heading */
+    }
+    
+    .skills-container {
+        grid-template-columns: repeat(3, 1fr) !important; /* Match desktop/tablet - 3 columns */
+        gap: clamp(6px, 1.5vw, 10px) !important; /* Small gap for better visual separation */
+        padding: clamp(20px, 4vw, 35px) clamp(6px, 2vw, 12px) !important; /* Reduced horizontal padding to extend tags */
+        margin: 0 auto !important; /* Center the container */
+        width: calc(100% - clamp(12px, 4vw, 24px)) !important; /* Reduced width constraint to allow longer tags */
+        max-width: none !important;
+        box-sizing: border-box !important;
+        align-items: center !important; /* Center items */
+        justify-items: center !important; /* Center grid items */
+        overflow: hidden !important; /* Match desktop */
+    }
+    
+    .skill-tag {
+        padding: clamp(6px, 1.5vw, 10px) 0 !important; /* Vertical padding only, horizontal handled by text/icon */
+        font-size: 10px !important; /* Standard mobile: 10px for tag text */
+        line-height: 1.3 !important; /* Slightly increased line height for better readability when wrapping */
+        width: 100% !important; /* Full width in grid cell */
+        min-height: clamp(36px, 6.5vw, 54px) !important; /* Minimum height to match background */
+        height: auto !important; /* Auto height to accommodate wrapped text */
+        gap: 0 !important; /* Remove gap, using absolute positioning */
+        position: relative !important; /* For absolute positioning of icons */
+        overflow: visible !important; /* Allow text to wrap and be visible */
+        box-sizing: border-box !important;
+        /* Restore rotations for small mobile to match desktop/tablet */
+    }
+    
+    /* Scale backgrounds to match icon size on small mobile - Blue cards (left side) */
+    .skill-tag:nth-child(1)::before,
+    .skill-tag:nth-child(2)::before,
+    .skill-tag:nth-child(3)::before,
+    .skill-tag:nth-child(7)::before,
+    .skill-tag:nth-child(8)::before,
+    .skill-tag:nth-child(9)::before {
+        width: clamp(36px, 6.5vw, 54px) !important; /* Background size */
+        height: clamp(36px, 6.5vw, 54px) !important;
+        left: 0 !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important; /* Center vertically */
+    }
+    
+    /* Scale icons to match background - Blue cards (left side) - Small mobile */
+    .skill-tag:nth-child(1) .skill-icon,
+    .skill-tag:nth-child(2) .skill-icon,
+    .skill-tag:nth-child(3) .skill-icon,
+    .skill-tag:nth-child(7) .skill-icon,
+    .skill-tag:nth-child(8) .skill-icon,
+    .skill-tag:nth-child(9) .skill-icon {
+        width: clamp(26px, 4.5vw, 38px) !important; /* Icon size - slightly smaller than background */
+        height: clamp(26px, 4.5vw, 38px) !important;
+        position: absolute !important;
+        left: clamp(5px, 1vw, 8px) !important; /* Center icon in background */
+        top: 50% !important;
+        transform: translateY(-50%) !important; /* Center vertically */
+        z-index: 2 !important; /* Icon on top of background */
+    }
+    
+    /* Scale backgrounds to match icon size on small mobile - White cards (right side) */
+    .skill-tag:nth-child(4)::before,
+    .skill-tag:nth-child(5)::before {
+        width: clamp(36px, 6.5vw, 54px) !important; /* Background size */
+        height: clamp(36px, 6.5vw, 54px) !important;
+        right: 0 !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important; /* Center vertically */
+    }
+    
+    /* Scale icons to match background - White cards (right side) - Small mobile */
+    .skill-tag:nth-child(4) .skill-icon,
+    .skill-tag:nth-child(5) .skill-icon {
+        width: clamp(26px, 4.5vw, 38px) !important; /* Icon size - slightly smaller than background */
+        height: clamp(26px, 4.5vw, 38px) !important;
+        position: absolute !important;
+        right: clamp(5px, 1vw, 8px) !important; /* Center icon in background */
+        top: 50% !important;
+        transform: translateY(-50%) !important; /* Center vertically */
+        z-index: 2 !important; /* Icon on top of background */
+    }
+    
+    /* Blender background - slightly larger - Small mobile */
+    .skill-tag:nth-child(6)::before {
+        width: clamp(44px, 8vw, 66px) !important; /* Larger background for Blender */
+        height: clamp(44px, 8vw, 66px) !important;
+        right: 0 !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important; /* Center vertically */
+    }
+    
+    /* Blender icon - Small mobile */
+    .skill-tag:nth-child(6) .skill-icon {
+        width: clamp(34px, 6vw, 50px) !important; /* Icon size - slightly smaller than background */
+        height: clamp(34px, 6vw, 50px) !important;
+        position: absolute !important;
+        right: clamp(5px, 1vw, 8px) !important; /* Center icon in background */
+        top: 50% !important;
+        transform: translateY(-50%) !important; /* Center vertically */
+        z-index: 2 !important; /* Icon on top of background */
+    }
+    
+    /* Position text within tags - Blue cards (text after icon) - Small mobile */
+    .skill-tag:nth-child(1) .skill-text,
+    .skill-tag:nth-child(2) .skill-text,
+    .skill-tag:nth-child(3) .skill-text,
+    .skill-tag:nth-child(7) .skill-text,
+    .skill-tag:nth-child(8) .skill-text,
+    .skill-tag:nth-child(9) .skill-text {
+        margin-left: clamp(36px, 6.5vw, 54px) !important; /* Space for background */
+        padding: clamp(6px, 1.5vw, 10px) clamp(10px, 2vw, 18px) clamp(6px, 1.5vw, 10px) clamp(6px, 1.5vw, 10px) !important; /* Padding inside tag */
+        display: block !important;
+        white-space: normal !important; /* Allow text to wrap */
+        overflow: visible !important; /* Show full text */
+        word-wrap: break-word !important; /* Break long words if needed */
+        max-width: calc(100% - clamp(36px, 6.5vw, 54px)) !important; /* Prevent overflow */
+    }
+    
+    /* Position text within tags - White cards (text before icon) - Small mobile */
+    .skill-tag:nth-child(4) .skill-text,
+    .skill-tag:nth-child(5) .skill-text {
+        margin-right: clamp(36px, 6.5vw, 54px) !important; /* Space for background */
+        padding: clamp(6px, 1.5vw, 10px) clamp(6px, 1.5vw, 10px) clamp(6px, 1.5vw, 10px) clamp(10px, 2vw, 18px) !important; /* Padding inside tag */
+        display: block !important;
+        white-space: normal !important; /* Allow text to wrap */
+        overflow: visible !important; /* Show full text */
+        word-wrap: break-word !important; /* Break long words if needed */
+        max-width: calc(100% - clamp(36px, 6.5vw, 54px)) !important; /* Prevent overflow */
+    }
+    
+    /* Blender text - Small mobile */
+    .skill-tag:nth-child(6) .skill-text {
+        margin-right: clamp(44px, 8vw, 66px) !important; /* Space for larger Blender background */
+        padding: clamp(6px, 1.5vw, 10px) clamp(6px, 1.5vw, 10px) clamp(6px, 1.5vw, 10px) clamp(10px, 2vw, 18px) !important; /* Padding inside tag */
+        display: block !important;
+        white-space: normal !important; /* Allow text to wrap */
+        overflow: visible !important; /* Show full text */
+        word-wrap: break-word !important; /* Break long words if needed */
+        max-width: calc(100% - clamp(44px, 8vw, 66px)) !important; /* Prevent overflow */
+    }
+    
+    /* Restore rotations for skill tags on small mobile */
+    .skill-tag:nth-child(1) {
+        transform: rotate(-5deg) !important; /* Rotate Figma */
+    }
+    
+    .skill-tag:nth-child(3) {
+        transform: rotate(8deg) !important; /* Rotate Illustrator */
+    }
+    
+    .skill-tag:nth-child(5) {
+        transform: rotate(-7deg) !important; /* Rotate Adobe Premiere */
+    }
+    
+    .skill-tag:nth-child(7) {
+        transform: rotate(6deg) !important; /* Rotate Storyboarding */
+    }
+    
+    .skill-tag:nth-child(9) {
+        transform: rotate(-4deg) !important; /* Rotate Conceptualization */
+    }
+    
+    .future-text {
+        font-size: 16px !important; /* Mobile: 16px for answers */
+        width: 100% !important; /* Full width */
+        text-align: left !important; /* Left-align answer text */
+    }
+    
+    /* Contact Section - Small Mobile */
+    .contact-section {
+        padding: clamp(40px, 6vw, 60px) clamp(20px, 5vw, 40px) !important; /* Responsive padding */
+    }
+    
+    .contact-content {
+        flex-direction: column !important; /* Vertical layout like reference */
+        gap: clamp(20px, 4vw, 30px) !important; /* Responsive gap */
+        align-items: center !important; /* Center everything like reference */
+        justify-content: center !important;
+    }
+    
+    .contact-heading {
+        font-size: 24px !important; /* Match other headings */
+        text-align: center !important; /* Center heading */
+        text-decoration: underline !important; /* Underline like reference */
+        margin-bottom: 0 !important;
+    }
+    
+    .contact-info {
+        display: flex !important;
+        flex-direction: row !important; /* Horizontal layout */
+        flex-wrap: wrap !important; /* Allow wrapping */
+        align-items: center !important; /* Center everything */
+        justify-content: center !important;
+        gap: clamp(15px, 3vw, 20px) !important; /* Gap between items */
+    }
+    
+    /* Icons should be in a horizontal row */
+    .contact-link {
+        display: inline-flex !important;
+        flex-shrink: 0 !important;
+    }
+    
+    .contact-icon {
+        width: clamp(32px, 6vw, 40px) !important; /* Responsive icon size */
+        height: clamp(32px, 6vw, 40px) !important;
+    }
+    
+    .contact-phone {
+        font-size: 16px !important; /* Match answer text size */
+        text-align: center !important; /* Center phone number */
+        text-decoration: underline !important; /* Underline phone number like reference */
+        flex-basis: 100% !important; /* Force to new line */
+        width: 100% !important;
+        margin-top: clamp(5px, 1vw, 10px) !important; /* Space above phone */
+    }
+}
